@@ -1,0 +1,37 @@
+[1] To do that we will use a >> GitHub CLI, or gh, is a command-line interface to GitHub for use in your terminal or your scripts.
+        -- https://cli.github.com/manual/
+
+>> ((Installation the GitHub CLI))
+    .. https://github.com/cli/cli#installation
+    .. in terminal >> 
+        1\ winget install --id GitHub.cli
+        2\ gh auth login
+            ? Where do you use GitHub? GitHub.com
+            ? What is your preferred protocol for Git operations on this host? SSH
+            ? Upload your SSH public key to your GitHub account? C:\Users\Nedaa Ryad\.ssh\id_ed25519.pub
+            ? Title for your SSH key: (GitHub CLI) ssh-key
+
+            ? Title for your SSH key: ssh-key
+            ? How would you like to authenticate GitHub CLI? Login with a web browser
+
+            ! First copy your one-time code: 5F1F-E925
+            Press Enter to open https://github.com/login/device in your browser...
+            ✓ Authentication complete.
+            - gh config set -h github.com git_protocol ssh
+            ✓ Configured git protocol
+            ✓ SSH key already existed on your GitHub account: C:\Users\Nedaa Ryad\.ssh\id_ed25519.pub
+            ✓ Logged in as nedaa-ryad
+                
+        
+
+>> THIS link have all of commands
+    .. https://cli.github.com/manual/gh_repo_create
+
+>> ((steps to create a new repo))
+    [1] >>  # create a new remote repository and clone it locally
+            .. gh repo create project-name --private --clone 
+            .. echo # MYSQL-Studies >> README.md
+            .. git add README.md
+            .. git commit -m "first commit"
+            .. git branch -M main
+            .. git push -u origin main
