@@ -1,0 +1,155 @@
+>> [[ Localization for En -- AR ]] -- https://laravel.com/docs/11.x/localization
+    [1] :: run command to create dir \lang 
+            >> php artisan lang:publish
+    [2] :: create a new dir for \ar Or any lang I need it 
+        .. /lang
+            /en
+                \dir
+                    \files
+                messages.php
+            /ar
+                messages.php
+        .. into files we have 2 ways to do the translation [json & php]
+            [1 :: php ] (( 
+                <?php
+            
+                lang/en/messages.php
+            
+                return [
+                    'welcome' => 'Welcome to our application!',
+                ];
+            ))
+
+            [2 :: json ] ((
+                lang/es.json file:
+                
+                {
+                "I love programming.": "Me encanta programar."
+                }
+            ))
+
+    [3] :: this step is option because it's for just a SVG flag countries in blade templates
+            >> use package [blade flags] by run [composer require outhebox/blade-flags] 
+            >> Documentation >>  https://github.com/MohmmedAshraf/blade-flags
+
+    [4] :: Configuring the Locale >> 
+        [1] >> into web.php >> create Route for local
+            Route::get('\lang\{locale}', [--Controller::class, 'functionName'])->name('locale')
+
+        [2] >> into the --Controller.php create the logic to store the locale into a [Session + App]
+            .. in session doing set the locale for this request to the Middleware
+            .. in App doing set the locale 
+
+                use Illuminate\Support\Facades\Session;
+                use Illuminate\Support\Facades\App;
+                    Publish function ($locale) {
+                        \\ check if the current locale in not exist in this array
+                        if (! in_array($locale, ['en', 'ar'])) {
+                            abort(400);
+                        };
+
+                        \\ to store the locale in Session to Middleware to handle the Requests
+                        Session::put('locale', $locale); 
+
+                        App::setLocale($locale);
+
+                        // redirect the user back to the page they were on before switching the language.
+                        return redirect()->back();
+                    }
+
+        [3] :: about use the Middleware to handle the request is option if I don't use it and the translation will done success but the Middleware step professional To ensure the application uses the correct language across all
+        pages, create a middleware that reads the locale from the session and sets it for each request.
+            [1] >>  Set Up Middleware to Manage Locale on Each Request
+                [..] >> Run [[php artisan make:middleware LocaleMiddleware]] to create a new middleware.
+                    - this command create a new dir \Http\Middleware
+                    - and a new file \Http\Middleware\LocaleMiddleware.php
+                        into the file >> write the logic to get the request we need to 
+
+                            use Illuminate\Support\Facades\Session;
+                            use Illuminate\Support\Facades\App;
+                            public function handle(Request $request, Closure $next): Response
+                            {
+                                \\ get locale of the request from Session that was sent it 
+                                $locale = Session::get('locale', config('app.locale')); // (key, value)
+                                
+                                \\ condition to insure the session have the request with key 'locale' that I was sent -- to set the locale into App
+                                if (session()->has('locale')) {
+                                    App::setLocale($locale);
+                                }
+                                
+                                return $next($request);
+                            }
+
+            [2] >> Register the this middleware 
+                -into \system-root\bootstrap\app.php
+                            >> register the Middleware Class that I was create it
+                                // note >> The web Middleware Group use for Sessions and Cookies not with append method direct
+                                -- if we not use the (web group) the register is will not working -- because when 
+                                $middleware->web(
+                                [
+                                LocaleMiddleware::class,
+                                ]
+                                );
+
+                            >> info about why we use the web middleware group with session or cookies or CSRF Protection
+                                -- web middleware group: Handles sessions, cookies, and CSRF protection.
+                                If your custom middleware (e.g., LocaleMiddleware) depends on sessions or cookies, it must be part of the web group.
+                                ** Wrong Way:
+                                    $middleware->append([
+                                    LocaleMiddleware::class,
+                                    ]);
+                                    This does not include the web group, so sessions and cookies won’t work.
+                                ** Correct Way:
+                                    $middleware->web([
+                                    LocaleMiddleware::class,
+                                    ]);
+                                    This ensures your middleware runs with sessions and cookies enabled.
+                                    In short: Always include middleware in the web group if it needs session or cookie access. 🚀
+                -- before version 11 in laravel we
+                registered the middlewares into file \Http\kernel.php -- but now in 11 we do it that into dir \bootstrap\app.php
+
+
+    [5] in Blade Templates >> json
+        [1] >> into a app layout -- Both are good
+                <body class="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}"> OR
+                <body class="{{  App::isLocale('ar') ? 'rtl' : 'ltr' }}"> -- but this in documentation
+
+        [2] >> in blade templates
+                ..this if the translation have a HTML tags -- !! to render the HTML tags 
+                    >>{!! __('client-side\home.landing_text') !!}
+                .. this is normal if the text not have any tags
+                    {{ __('client-side\home.contact_me') }} \\ \en,ar\dirName\fileName.keyInFile
+
+        [3] >> in Header 
+                {{-- Language Switchers --}}
+                <x-dropdown align="right">
+                    <div class="nav__localization ms-3 relative w-auto">
+                        \\ the flags countries 
+                        <x-slot name="trigger">
+                            <span class="rounded-md cursor-pointer grid">
+                                @if (app()->getLocale() === 'en')
+                                <x-flag-country-us class="w-7 h-7" />
+                                @else
+                                <x-flag-country-eg class="w-7 h-7" />
+                                @endif
+                            </span>
+                        </x-slot>
+                        
+                        \\ the routes to alternative between them
+                        <x-slot name="content">
+                            @if (app()->getLocale() === 'ar')
+                                <link a href="{{ route('lang', 'en') }}" class="flex items-center gap-2 px-4 py-2 text-sm" role="menuitem"
+                                    tabindex="-1" id="menu-item-0">
+                                    <x-flag-country-us class="w-7 h-7" />
+                                    EN
+                                </>
+                            @else
+                                <link a href="{{ route('lang', 'ar') }}" class="flex items-center gap-2 px-4 py-2 text-sm" role="menuitem"
+                                    tabindex="-1" id="menu-item-1">
+                                    <x-flag-country-eg class="w-7 h-7" />
+                                    AR
+                                </>
+                            @endif
+                        </x-slot>
+                    </div>
+                </x-dropdown>
