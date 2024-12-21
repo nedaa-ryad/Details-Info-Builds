@@ -1,3 +1,272 @@
-## the course his about 4 hours 
+## the course his about 4 hours his talking about >> [ database | migrations | auth token | request response | API]
     https://www.youtube.com/watch?v=v6Vtn84gvzU&t=11s&ab_channel=%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%D8%AA%D8%B1%D9%85%D9%8A%D8%B2
 
+## Setup new laravel project -- I'll create a new project to practice all of course here
+    ..composer global require laravel/installer \\ this will be create the laravel global
+        [1] >> laravel new example-app
+        [2] >> cd example-app
+        [3] >> npm install && npm run build
+        [4] >> composer run dev >> to run [[vite && server]] this into composer.json in "dev" to run this command for both
+        [6] >> after write the database connection in file .env -- we need to run this command to migrate all database and not get any error 
+            [7] >> php a rtisan migrate
+            .. and also connect with SqlTools in vscode to see all of them this step is option
+
+        >> this the structure of the project with explain
+            \root
+            │
+            ├── \app
+            │ ├── \Http
+            │ │ └── \Controllers
+            │ │ └── Contains controller classes to handle HTTP requests.
+            │ ├── \Models
+            │ │ └── Holds Eloquent models for database interaction and relationships.
+            │ ├── \Providers
+            │ └── Registers and bootstraps application services.
+            │
+            ├── \bootstrap
+            │ └── app.php
+            │ └── Configures the application and sets up middleware.
+            │
+            ├── \config
+            │ └── Contains configuration files for app settings, database, and caching.
+            │
+            ├── \database
+            │ ├── \factories
+            │ │ └── UserFactory.php
+            │ │ └── Generates fake data for testing the `users` table.
+            │ ├── \seeders
+            │ ├── DatabaseSeeder.php
+            │ │ └── Calls all individual seeders for database population.
+            │ └── UserSeeder.php
+            │ └── Populates the `users` table with sample data.
+            │
+            ├── \node_modules
+            │ └── Contains frontend dependencies installed via `npm` or `yarn`.
+            │
+            ├── \public
+            │ └── The public-facing directory served by the web server.
+            │ └── Contains `index.php` and static assets like images and CSS.
+            │
+            ├── \resources
+            │ ├── \admin-system
+            │ │ └── dashboard.blade.php
+            │ │ └── The first page of the admin dashboard.
+            │ ├── \customer-system
+            │ │ └── dashboard.blade.php
+            │ │ └── The first page of the customer dashboard.
+            │ └── \views
+            │ ├── \layouts
+            │ │ └── app.blade.php
+            │ │ └── The main layout for all pages.
+            │
+            ├── \routes
+            │ └── Defines routes for the application (e.g., `web.php`, `api.php`).
+            │
+            ├── \storage
+            │ └── Stores logs, compiled templates, and file uploads.
+            │
+            ├── \tests
+            │ └── Contains unit and feature tests for the application.
+            │
+            ├── \vendor
+            │ └── Contains PHP dependencies installed via Composer.
+            │
+            ├── .editorconfig
+            │ └── Defines coding style conventions for editors.
+            ├── .env
+            │ └── Stores environment-specific configuration, like DB credentials.
+            ├── .env.example
+            │ └── A sample `.env` file for reference.
+            ├── .gitattributes
+            │ └── Configures attributes for Git repositories.
+            ├── .gitignore
+            │ └── Specifies files/folders to exclude from version control.
+            ├── artisan
+            │ └── The CLI tool for Laravel tasks (e.g., migrations, seeders).
+            ├── composer.json
+            │ └── Defines PHP dependencies and project metadata.
+            ├── composer.lock
+            │ └── Locks dependency versions installed via Composer.
+            ├── package.json
+            │ └── Lists frontend dependencies and scripts.
+            ├── package-lock.json
+            │ └── Locks frontend dependency versions.
+            ├── phpunit.xml
+            │ └── Configuration for PHPUnit tests.
+            ├── postcss.config.js
+            │ └── Configuration for PostCSS, used with CSS processing.
+            ├── README.md
+            │ └── A project documentation file.
+            ├── tailwind.config.js
+            │ └── Configuration for Tailwind CSS framework.
+            └── vite.config.js
+            └── Configuration file for Vite, the frontend build tool.
+
+
+    [..] >> any routes that into {{ web.php }} his a Requests And Responses  
+
+    [..] >> when create a new laravel project maybe some time field install some of packages because that to insure that all of packages in laravel are installed we do that 
+        [1] >> Update Composer Packages: Run the following command to update all Composer packages to their latest versions:
+                .. composer update
+        [2] >> Update NPM Packages: Run the following command to update all NPM packages to their latest versions:
+                .. npm update
+        [3] >>  Install Missing Packages: If there are any missing packages, you can install them using the following commands:
+                .. composer install
+                .. npm install 
+        [5] >> php artisan migrate
+
+    [..] >> In Http\Controllers directory >> , you define controller classes that contain the logic for handling HTTP requests and
+    returning responses. These controllers are responsible for processing the incoming requests, interacting with models, and returning the appropriate views or data.
+        .. {{In summary}}, controllers handle the logic for processing requests, interacting with the database through models, and
+    returning the correct response to the client.
+
+
+    [..] >> Here's a brief overview of how HTTP requests are handled in Laravel:
+            1\ Request: A user sends a request to the application, like accessing a page.
+            
+            2\ Route: The request is matched to a route defined in your application.
+            
+            3\ Middleware: Before reaching the controller, the request passes through middleware. Middleware can perform tasks like
+            authentication, logging, or modifying the request.
+            
+            4\ Controller: If the middleware allows the request to proceed, it's handled by the controller. The controller contains the
+            main logic to process the request and generate a response.
+            
+            5\ Response: The controller returns a response, which is then sent back
+
+
+            Route::get('/users', [UserController::class, 'index'])->middleware('auth');
+                >> This ensures that every request to /users goes through the CheckIfAuthenticated middleware first.
+
+    [..] >> [[ About API ]] >>>>> (((
+            .. OK, which means. Not my server-side works.
+                    GitHub Copilot
+                    Yes, that's correct. The routes defined in api.php are intended for external clients to interact with your server-side
+                    application. These routes are part of your server-side application, but they are specifically designed to be accessed by
+                    external clients over the network.
+        )))
+            >>> (( if not found in laravel project the file \routes\api.php )) >>
+                .. >> to install the api.php file in the routes directory of your Laravel project.]]
+                        ...Run Command >>> [[ php artisan install:api ]] 
+                            >> this command create an
+                                [1] >> api.php file in \routes\api.php
+                                [2] >> adding auto > "api: __DIR__.'/../routes/api.php'," into file \bootstrap\app.php into section > [withRouting]
+                            
+                        .. By using the api.php file, you can effectively manage and organize the API endpoints of your Laravel application.
+
+                        [[Notice::]] when define any routes in api file and then write the route in browser we need need to write 
+                            -- http://localhost:8000/api/your-route
+                            -- http://localhost:8000/api/v1/your-route
+                            without write the 'api' in the url we will not get the response of the route and get '404' error 
+
+                            Example >> Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+                            return $request->user();
+                            }); >> and to get this route 'user' we will write 
+                            -- http://localhost:8000/api/user
+
+    [..] {{ About Use a Postman To test the APIs }}
+                >>>. Notice >> to use a postman tool with mysql oracle we need to do some of steps to connect with the database to dealing with the database like to do [post request, Delete request, and other] -- because with disconnect we will not get any response when do sql post or delete statements
+                    
+
+                
+            .. Postman is primarily used for testing and interacting with external APIs. It allows you to send HTTP requests to your
+            API endpoints and inspect the responses, which is especially useful when developing and debugging APIs that external
+            clients (such as web or mobile applications)
+
+                    [..] >> {{When to Use api.php}}
+                        External APIs: If you are building an API that will be consumed by external clients (such as mobile apps or third-party
+                        services), it is a good practice to define these routes in api.php.
+                        Stateless Routes: API routes are typically stateless, meaning they do not maintain session state. The api.php file is
+                        designed for such routes.
+                        Middleware: The api middleware group is automatically applied to routes in api.php, which includes features like rate
+                        limiting. This makes it easier to manage and secure your API routes.
+
+
+    [..] >> {{ About Database Migrations && Database SQL CLI}} >>
+        [1] >> {{ About Database Migrations and dealing with it && Models}}
+            
+            1. Do Database Migrations and then
+            2. Do Database Model 
+            3. Additional Steps other like (controllers, routes, views, etc)
+
+                .. https://laravel.com/docs/11.x/migrations
+
+                .. Migrations are like version control for your database, allowing your team to define and share the application's database
+
+                .. we not deal with sql statements to create the tables and columns in the database we use the migrations to do that --- of statements we do with the migrations to not get any error in the database --- and make all things about the database by commands in laravel.
+
+                ..In Laravel, the connection between the database and models is facilitated by Eloquent, Laravel's Object-Relational
+                Mapping (ORM) system. Eloquent provides a simple and elegant way to interact with your database using models.
+
+                .. Models are PHP classes that represent database tables. They allow you to query and manipulate data in the database using
+
+                .. By using models and migrations, Laravel provides a powerful and flexible way to interact with your database, making it
+                easy to manage and manipulate data.
+
+                        [1] >> Running Migrations 
+                                . php artisan migrate
+                        [2] >> Generating Migrations
+                                . php artisan make:migration create_flights_table
+                                {{OR}}
+                                .php artisan make:migration CreateArchiveTable 
+                                    {{and the result of both ways will be the same}} >> "___create_articles_table"
+
+                                which means like "create_flights_table" OR "CreateArchiveTable"
+                                    ,, standard 'Create, NameOfTableWith\s, table' >> "create_articles_table"
+
+                        [3] >> Add new columns into exist database table
+                                - as multiple columns >>
+                                    . php artisan make:migration AddColumnsToUsersTable --table=tableName
+                                . php artisan make:migration add_votes_to_users_table --table=users
+                                {{OR}}
+                                . php artisan make:migration AddVotesToUsersTable --table=users
+                                {{OR}}
+                                . php artisan make:migration add_votes_to_users_table --table=users
+                                {{OR}}
+                                . php artisan make:migration AddVotesToUsersTable --table=users
+
+                        [4] >> Rollback Migrations
+                                . php artisan migrate:rollback
+                        [5] >> Refresh Migrations
+                                . php artisan migrate:refresh
+                        [6] >> Reset Migrations
+                                . php artisan migrate:reset
+                        [7] >> Refresh && Seed Migrations
+                                . php artisan migrate:refresh --seed
+                
+                .. {{About Models}}
+                    .. https://laravel.com/docs/11.x/eloquent
+                    .. Laravel includes Eloquent, an object-relational mapper (ORM) that makes it enjoyable to interact with your database.
+                    When using Eloquent, each database table has a corresponding "Model" that is used to interact with that table. In
+                    addition to retrieving records from the database table, Eloquent models allow you to insert, update, and delete records
+                    from the table as well.
+
+                    [1] >> Creating Models
+                            . php artisan make:model Flight
+                    [2] >> Generating Factories
+                            . php artisan make:factory FlightFactory
+                    [3] >> Generating Seeders
+                            . php artisan make:seeder FlightSeeder
+                    [4] >> Running Seeders
+                            . php artisan db:seed --class=FlightSeeder
+
+
+        
+        [2] >> {{ About Database CLI 'Command Line Interface' }}
+                .. https://laravel.com/docs/11.x/database#connecting-to-the-database-cli
+
+        .Comparison:
+            Feature:: Database Migrations -- Database CLI (Manual)
+            .Version Control:: Tracks schema changes over time -- No version control; manual scripts required.
+            .Collaboration:: Easy to share with team members via codebase -- Requires exporting and importing .sql files.
+            .Rollback Support:: Yes, you can roll back specific migrations or all migrations Requires manual scripting for undoing changes.
+            .Automation:: Fully automatable (e.g., php artisan migrate)-- Manual execution of SQL queries.
+            .Ease of Use:: High, especially for schema changes during development -- Medium; requires knowledge of SQL commands.
+
+        [[ In The End The Migrations is better and professional and also to dealing with Models ]]
+
+
+
+
+
+**** with the "Token we Know who is the user"

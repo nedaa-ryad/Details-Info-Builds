@@ -19,3 +19,66 @@
 
         [7] :: Browser Sessions
                 Allows users to view and manage their active login sessions (e.g., devices they’re logged in from) and log out from other devices.
+
+
+
+
+
+[1] :: Authentication (( Allows users to log in to the system using credentials like email and password. ))
+
+[[ All Steps ]] ::
+    
+
+
+
+
+    =============
+[2] ::  ((  ))
+
+[[ All Steps ]] ::
+
+
+
+
+
+    =============
+[3] ::  ((  ))
+
+[[ All Steps ]] ::
+    
+
+
+
+
+    =============
+[4] ::  ((  ))
+
+[[ All Steps ]] ::
+    
+
+
+
+
+    =============
+[5] ::  ((  ))
+
+[[ All Steps ]] ::
+    
+
+
+
+
+    =============
+[6] ::  ((  ))
+
+[[ All Steps ]] ::
+    
+
+
+
+
+    =============
+[7] ::  ((  ))
+
+[[ All Steps ]] ::
+    
